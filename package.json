@@ -1,9 +1,7 @@
 {
-  "name": "patternfly-seed",
-  "version": "0.0.2",
-  "description": "An open source build scaffolding utility for web apps.",
-  "repository": "https://github.com/patternfly/patternfly-react-seed.git",
-  "homepage": "https://patternfly-react-seed.surge.sh",
+  "name": "hcc-research-dashboard",
+  "version": "0.0.1",
+  "description": "HCC Research dashboard — PatternFly React prototype.",
   "license": "MIT",
   "private": true,
   "scripts": {
