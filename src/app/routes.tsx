@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Dashboard } from '@app/Dashboard/Dashboard';
-import { Support } from '@app/Support/Support';
-import { GeneralSettings } from '@app/Settings/General/GeneralSettings';
-import { ProfileSettings } from '@app/Settings/Profile/ProfileSettings';
+import { EpicDetailPage } from '@app/EpicDetail/EpicDetailPage';
+import { ResearchResources } from '@app/ResearchResources/ResearchResources';
+import { ResearchProcess } from '@app/ResearchProcess/ResearchProcess';
 import { NotFound } from '@app/NotFound/NotFound';
 
 export interface IAppRoute {
@@ -30,33 +30,27 @@ const routes: AppRouteConfig[] = [
     exact: true,
     label: 'Dashboard',
     path: '/',
-    title: 'PatternFly Seed | Main Dashboard',
+    title: 'HCC Research | ConsolePuffs',
   },
   {
-    element: <Support />,
+    element: <ResearchProcess />,
     exact: true,
-    label: 'Support',
-    path: '/support',
-    title: 'PatternFly Seed | Support Page',
+    label: 'Research process',
+    path: '/research/process',
+    title: 'Research Process | ConsolePuffs',
   },
   {
-    label: 'Settings',
-    routes: [
-      {
-        element: <GeneralSettings />,
-        exact: true,
-        label: 'General',
-        path: '/settings/general',
-        title: 'PatternFly Seed | General Settings',
-      },
-      {
-        element: <ProfileSettings />,
-        exact: true,
-        label: 'Profile',
-        path: '/settings/profile',
-        title: 'PatternFly Seed | Profile Settings',
-      },
-    ],
+    element: <EpicDetailPage />,
+    exact: true,
+    path: '/research/epic/:epicKey',
+    title: 'Epic | ConsolePuffs',
+  },
+  {
+    element: <ResearchResources />,
+    exact: true,
+    label: 'Research Resources',
+    path: '/support',
+    title: 'Research Resources | ConsolePuffs',
   },
 ];
 
