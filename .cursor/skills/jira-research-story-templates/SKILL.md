@@ -20,7 +20,7 @@ When [hcc-epic-creator](../hcc-epic-creator/SKILL.md) just created an epic and S
 1. **Parent** is the **new epic issue key**; do not ask for a different parent unless the user corrects you.
 2. **No second approval** for the nine stories: the epic draft already listed titles, points, and auto-create intent. Proceed to `createJiraIssue` for all nine in canonical order (unless the user opted out of child stories before epic create).
 3. **Assignee:** use the **epic assignee** for each story when set; otherwise omit `assignee_account_id`.
-4. Still apply: HCC label, default SP column, per-story activity type from the canonical table, component HCC (and Subscriptions if the epic used it), active HCC sprint, **Refinement** status, full descriptions from the per-story templates below.
+4. Still apply: HCC label, default SP column, per-story activity type from the canonical table, component HCC (and Subscriptions if the epic used it), **no sprint** (backlog by default), **Refinement** status, full descriptions from the per-story templates below.
 
 ## Creating stories in Jira (Atlassian MCP)
 
@@ -44,9 +44,7 @@ Use the same IDs as [hcc-epic-creator](../hcc-epic-creator/SKILL.md):
 | Component Subscriptions | Add `{"id": "68527"}` when the epic skill’s Subscriptions rules apply |
 | Activity Type | `customfield_10464`: `{"id": "<option-id>"}` — use the **per-story activity type** from the canonical story table below; override only if the user or epic dictates otherwise |
 | Story Points | `customfield_10028`: use **default points from the canonical story table** below; override only if the user asks before or after creation (edits in Jira are fine) |
-| Sprint | `customfield_10020`: **plain integer** sprint ID from open HCC sprint (see below) |
-
-**Active HCC sprint:** run JQL `project = CPUX AND sprint in openSprints() AND component = HCC`, read `customfield_10020[0].id` from a hit. Use that integer for each story unless the user says otherwise.
+| Sprint | Do **not** set `customfield_10020` — research stories go to the **backlog** by default (no sprint assignment). Only assign a sprint if the user explicitly requests it. |
 
 ### Status: Refinement
 
@@ -86,8 +84,7 @@ Jira creation progress:
 - [ ] Confirm Atlassian MCP is usable
 - [ ] Collect parent epic key (or confirm unparented)
 - [ ] Collect assignee (lookup account id if needed) or leave unset per user
-- [ ] Resolve sprint ID from open HCC sprint JQL
-- [ ] Draft all stories (summary + full markdown description + **default story points** + activity type + **HCC** label)
+- [ ] Draft all stories (summary + full markdown description + **default story points** + activity type + **HCC** label + **no sprint / backlog**)
 - [ ] User approves the draft list
 - [ ] createJiraIssue for each story in canonical order
 - [ ] For each new issue, confirm status is **Refinement**; transition via MCP if needed
@@ -99,8 +96,7 @@ Jira creation progress:
 Jira creation progress:
 - [ ] Confirm Atlassian MCP is usable
 - [ ] Parent = new epic key; assignee = epic assignee when set
-- [ ] Resolve sprint ID from open HCC sprint JQL (match epic’s sprint assignment pattern)
-- [ ] Build full descriptions for all nine stories from per-story templates (no separate story-list approval)
+- [ ] Build full descriptions for all nine stories from per-story templates (no separate story-list approval; no sprint — backlog by default)
 - [ ] createJiraIssue for each story in canonical order
 - [ ] For each new issue, confirm status is **Refinement**; transition via MCP if needed
 ```
@@ -123,13 +119,12 @@ Mirror [hcc-epic-creator](../hcc-epic-creator/SKILL.md) Step 7. Always include *
     "labels": ["HCC"],
     "components": [{"id": "68524"}],
     "customfield_10464": {"id": "<activity-type-option-id from canonical table>"},
-    "customfield_10028": 3,
-    "customfield_10020": 64782
+    "customfield_10028": 3
   }
 }
 ```
 
-Omit `parent` if creating unparented stories. Omit `assignee_account_id` if unknown and user did not specify. **Never** pass sprint as an object — only the numeric ID.
+Omit `parent` if creating unparented stories. Omit `assignee_account_id` if unknown and user did not specify. Do **not** include `customfield_10020` (sprint) — stories go to the backlog by default. Only add a sprint if the user explicitly requests it.
 
 If merging with other labels (e.g. problem-statement labels from an epic), **keep** `HCC` in the array and add the rest: `["HCC", "other-label"]`.
 

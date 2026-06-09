@@ -219,7 +219,7 @@ Extract the sprint ID from `customfield_10020[0].id` in any result.
 A **research epic** is one whose **summary** matches **`/research/i`** (case-insensitive), including the `[UXD EPIC]` prefix and epic name — e.g. `[UXD EPIC] Billing flow research` matches.
 
 1. **Before Step 6** (in the same epic draft you already show for approval): list the **nine canonical research story titles and default story points** from [jira-research-story-templates](../jira-research-story-templates/SKILL.md), and state they will be **created automatically under this epic immediately after the epic exists**. If the user opts out (“no child stories”, “epic only”), skip Step 7a entirely after Step 6.
-2. **After Step 6** returns the new epic issue key: do **not** use the generic story list below. Follow **jira-research-story-templates** for **bundled epic creation**: create **all nine** stories with `parent` = that epic key, including HCC label, default points per that skill, sprint, **Refinement** status, and descriptions from that skill. Default **story assignee** to the epic assignee unless the user said otherwise during Step 1.
+2. **After Step 6** returns the new epic issue key: do **not** use the generic story list below. Follow **jira-research-story-templates** for **bundled epic creation**: create **all nine** stories with `parent` = that epic key, including HCC label, default points per that skill, **no sprint (backlog)**, **Refinement** status, and descriptions from that skill. Default **story assignee** to the epic assignee unless the user said otherwise during Step 1.
 3. Reply with the epic key plus **all nine child story keys**, confirming they sit under the epic.
 
 #### Step 7b: All other epics — custom child stories
