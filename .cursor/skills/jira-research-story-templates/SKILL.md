@@ -44,6 +44,7 @@ Use the same IDs as [hcc-epic-creator](../hcc-epic-creator/SKILL.md):
 | Component Subscriptions | Add `{"id": "68527"}` when the epic skill’s Subscriptions rules apply |
 | Activity Type | `customfield_10464`: `{"id": "<option-id>"}` — use the **per-story activity type** from the canonical story table below; override only if the user or epic dictates otherwise |
 | Story Points | `customfield_10028`: use **default points from the canonical story table** below; override only if the user asks before or after creation (edits in Jira are fine) |
+| Acceptance Criteria | `customfield_10718`: Textarea (markdown) — checklist from per-story "Definition of Done" templates; set via `additional_fields` |
 | Sprint | Do **not** set `customfield_10020` — research stories go to the **backlog** by default (no sprint assignment). Only assign a sprint if the user explicitly requests it. |
 
 ### Status: Refinement
@@ -57,23 +58,24 @@ Do not leave new research stories in In Progress, Done, or other columns unless 
 
 ### Description shape in Jira
 
-Use `contentFormat: "markdown"`. For each story, set `description` to:
+Use `contentFormat: "markdown"`. For each story, set `description` to **only** the What and Problem Statement sections:
 
 ```markdown
 ### What
 
-[What section from the per-story template above.]
+[What section from the per-story template.]
 
 ### Problem Statement
 
-[Problem Statement section from the per-story template above.]
-
-### Definition of Done
-
-[Definition of Done checklist from the per-story template above.]
+[Problem Statement section from the per-story template.]
 ```
 
-Optionally add a **Dependencies** line under What (e.g. “Blocked by: CPUX-nnn”) if the user wants linked work; use `createIssueLink` with types from hcc-epic-creator when they ask for explicit links.
+Set the **Acceptance Criteria** field (`customfield_10718`) to the checklist items from the per-story template (markdown format, no heading needed — the field label serves as the heading). Example:
+
+    - [ ] First acceptance criterion
+    - [ ] Second acceptance criterion
+
+Optionally add a **Dependencies** line under What in the description (e.g. “Blocked by: CPUX-nnn”) if the user wants linked work; use `createIssueLink` with types from hcc-epic-creator when they ask for explicit links.
 
 ### Workflow
 
@@ -119,7 +121,8 @@ Mirror [hcc-epic-creator](../hcc-epic-creator/SKILL.md) Step 7. Always include *
     "labels": ["HCC"],
     "components": [{"id": "68524"}],
     "customfield_10464": {"id": "<activity-type-option-id from canonical table>"},
-    "customfield_10028": 3
+    "customfield_10028": 3,
+    "customfield_10718": "<acceptance criteria markdown from per-story template>"
   }
 }
 ```
@@ -157,12 +160,12 @@ For each story, output (or create in Jira) with:
 - **Summary**: exact title from the table (adjust only if the user’s naming convention requires it)
 - **Labels**: `HCC` on create (always); add others only if the user requests
 - **Story points**: default from the **Default SP** column; use user-provided values if they override when approving the draft
-- **Description**: Context, scope, links to docs/Figma/prototype, **owner**, **reviewers/approvers** if known
-- **Acceptance criteria**: checklist, testable, past tense where helpful
+- **Description** (`description` field): `### What` + `### Problem Statement` only — context, scope, links to docs/Figma/prototype, **owner**, **reviewers/approvers** if known
+- **Acceptance Criteria** (`customfield_10718` field): checklist items from the template below — testable, past tense where helpful; no heading needed in the field value
 
 ### 1. Create a research proposal and get approved
 
-**Description:**
+**Description** (`description` field):
 
 ### What
 Draft a formal research proposal outlining the core goals, methodology, and target audience for this study, and secure alignment from product and design leadership.
@@ -170,7 +173,8 @@ Draft a formal research proposal outlining the core goals, methodology, and targ
 ### Problem Statement
 Without a clear, approved research proposal, the team risks executing a study that lacks strategic alignment, potentially wasting time and resources on answering the wrong user experience questions.
 
-### Definition of Done
+**Acceptance Criteria** (`customfield_10718`):
+
 - [ ] Research goals, questions, and hypotheses are clearly defined.
 - [ ] Methodology (e.g., qualitative interviews, usability testing) is selected and justified.
 - [ ] Target user personas/demographics are specified.
@@ -178,7 +182,7 @@ Without a clear, approved research proposal, the team risks executing a study th
 
 ### 2. Create a research plan
 
-**Description:**
+**Description** (`description` field):
 
 ### What
 Develop a detailed research plan that operationalizes the approved proposal, mapping out the logistics, timelines, and specific step-by-step approach.
@@ -186,14 +190,15 @@ Develop a detailed research plan that operationalizes the approved proposal, map
 ### Problem Statement
 Without a granular research plan, the execution of the study could become disorganized, leading to missed deadlines, inconsistent data collection, and logistical bottlenecks.
 
-### Definition of Done
+**Acceptance Criteria** (`customfield_10718`):
+
 - [ ] Timeline with specific milestones (recruitment, sessions, analysis) is finalized.
 - [ ] Logistics (tools needed, team roles, scheduling links) are set up.
 - [ ] Stakeholders have reviewed and agreed to the timeline and resource allocation.
 
 ### 3. Create research artifacts (prototype, mocks, script, etc.)
 
-**Description:**
+**Description** (`description` field):
 
 ### What
 Build and prepare all necessary materials required to facilitate the research sessions, including interview guides, interactive prototypes, or UI mocks.
@@ -201,14 +206,15 @@ Build and prepare all necessary materials required to facilitate the research se
 ### Problem Statement
 If research artifacts are poorly prepared or lack realism, users may struggle to provide authentic feedback, compromising the validity of the research insights.
 
-### Definition of Done
+**Acceptance Criteria** (`customfield_10718`):
+
 - [ ] Interview script/discussion guide is drafted, reviewed, and finalized.
 - [ ] Prototypes or design mocks are built and verified to be fully functional for the test scenarios.
 - [ ] A dry-run/pilot session is conducted to test the artifacts and timing.
 
 ### 4. Get budget approved
 
-**Description:**
+**Description** (`description` field):
 
 ### What
 Calculate the total estimated cost for user incentives and recruiting tools, and secure financial approval from the budget owner.
@@ -216,14 +222,15 @@ Calculate the total estimated cost for user incentives and recruiting tools, and
 ### Problem Statement
 Without early and explicit budget approval, the team cannot legally or ethically recruit external participants, completely halting the research momentum.
 
-### Definition of Done
+**Acceptance Criteria** (`customfield_10718`):
+
 - [ ] Total cost for incentives and recruitment platform fees is calculated.
 - [ ] Expense request is submitted through the proper internal channels.
 - [ ] Formal financial sign-off is received from the budget owner or finance team.
 
 ### 5. Recruit users
 
-**Description:**
+**Description** (`description` field):
 
 ### What
 Source, screen, and schedule qualified participants who match the target criteria defined in the research proposal.
@@ -231,14 +238,15 @@ Source, screen, and schedule qualified participants who match the target criteri
 ### Problem Statement
 If the recruitment process is rushed or untargeted, we risk interviewing the wrong users, leading to data that does not accurately reflect our actual user base or problem space.
 
-### Definition of Done
+**Acceptance Criteria** (`customfield_10718`):
+
 - [ ] Participant screener survey is created and distributed.
 - [ ] Responses are vetted to match target user criteria.
 - [ ] Right number of participants (plus backables) are formally scheduled and confirmed.
 
 ### 6. Run research interviews
 
-**Description:**
+**Description** (`description` field):
 
 ### What
 Execute the research sessions with the scheduled participants, capturing raw qualitative and quantitative data using the finalized artifacts.
@@ -246,14 +254,15 @@ Execute the research sessions with the scheduled participants, capturing raw qua
 ### Problem Statement
 If interviews are not conducted neutrally or recorded properly, critical user pain points might be missed or misinterpreted, leading to skewed conclusions.
 
-### Definition of Done
+**Acceptance Criteria** (`customfield_10718`):
+
 - [ ] All scheduled interview sessions are completed.
 - [ ] Sessions are recorded (video/audio) with participant consent.
 - [ ] High-level notes/transcripts are captured for each session.
 
 ### 7. Analyze data and create summary report
 
-**Description:**
+**Description** (`description` field):
 
 ### What
 Synthesize the raw qualitative data from the interviews (using affinity mapping, coding, etc.) into actionable themes, insights, and a comprehensive summary report.
@@ -261,14 +270,15 @@ Synthesize the raw qualitative data from the interviews (using affinity mapping,
 ### Problem Statement
 Raw data is overwhelming and un-actionable; without deep synthesis, product teams cannot easily digest the findings or transform them into concrete UX improvements.
 
-### Definition of Done
+**Acceptance Criteria** (`customfield_10718`):
+
 - [ ] Raw interview data is synthesized (e.g., via affinity mapping or thematic analysis).
 - [ ] Core insights, user pain points, and design recommendations are defined.
 - [ ] A shareable summary report or presentation deck is finalized.
 
 ### 8. Pay users
 
-**Description:**
+**Description** (`description` field):
 
 ### What
 Distribute the agreed-upon incentives/stipends to all participants who successfully completed the research sessions.
@@ -276,14 +286,15 @@ Distribute the agreed-upon incentives/stipends to all participants who successfu
 ### Problem Statement
 Delayed or failed incentive payments damage our brand’s reputation, violate participant trust, and make it difficult to recruit users for future research initiatives.
 
-### Definition of Done
+**Acceptance Criteria** (`customfield_10718`):
+
 - [ ] Attendance is verified against the interview schedule.
 - [ ] Incentives (e.g., gift cards, cash transfers) are issued to all valid participants.
 - [ ] Delivery and receipt of payments are tracked and documented for accounting.
 
 ### 9. Share out research findings with stakeholders
 
-**Description:**
+**Description** (`description` field):
 
 ### What
 Present the final research insights and report to product, engineering, and design stakeholders to drive evidence-based product decisions.
@@ -291,7 +302,8 @@ Present the final research insights and report to product, engineering, and desi
 ### Problem Statement
 If research findings are not actively socialized and discussed, the insights will sit idle, and the product team may continue to build features based on assumptions rather than user data.
 
-### Definition of Done
+**Acceptance Criteria** (`customfield_10718`):
+
 - [ ] A share-out meeting/presentation is scheduled and attended by key stakeholders.
 - [ ] Findings and actionable next steps are presented and discussed.
 - [ ] Artifacts (deck, recording, report link) are archived in a central, accessible repository (e.g., Confluence, Notion).
