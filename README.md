@@ -1,103 +1,129 @@
-# Patternfly Seed
+# HCC Research Dashboard
 
-Patternfly Seed is an open source build scaffolding utility for web apps. The primary purpose of this project is to give developers a jump start when creating new projects that will use patternfly. A secondary purpose of this project is to serve as a reference for how to configure various aspects of an application that uses patternfly, webpack, react, typescript, etc.
-
-Out of the box you'll get an app layout with chrome (header/sidebar), routing, build pipeline, test suite, and some code quality tools. Basically, all the essentials.
-
-<img width="1058" alt="Out of box dashboard view of patternfly seed" src="https://github.com/user-attachments/assets/0227b366-67f1-4df8-8d92-e8e95d6e08b3" />
+A PatternFly-based web app for the Hybrid Cloud Console (HCC) UX team. Built on [patternfly-react-seed](https://github.com/patternfly/patternfly-react-seed).
 
 ## Quick-start
 
 ```bash
-git clone https://github.com/patternfly/patternfly-react-seed
-cd patternfly-react-seed
+git clone https://github.com/sjcox-rh/hcc-research-dashboard.git
+cd hcc-research-dashboard
 npm install && npm run start:dev
 ```
+
 ## Development scripts
+
 ```sh
-# Install development/build dependencies
-npm install
-
-# Start the development server
-npm run start:dev
-
-# Run a production build (outputs to "dist" dir)
-npm run build
-
-# Run the test suite
-npm run test
-
-# Run the test suite with coverage
-npm run test:coverage
-
-# Run the linter
-npm run lint
-
-# Run the code formatter
-npm run format
-
-# Launch a tool to inspect the bundle size
-npm run bundle-profile:analyze
-
-# Start the express server (run a production build first)
-npm run start
+npm install            # Install dependencies
+npm run start:dev      # Start the development server
+npm run build          # Production build (outputs to "dist")
+npm run test           # Run the test suite
+npm run test:coverage  # Run tests with coverage
+npm run lint           # Run the linter
+npm run format         # Run the code formatter
+npm run start          # Start the express server (run build first)
 ```
 
+---
+
+## Cursor Skills
+
+This repo includes Cursor AI skills in `.cursor/skills/` that automate common HCC team workflows. Anyone who clones this repo gets them automatically.
+
+### Jira Research Story Creator
+
+**Location:** `.cursor/skills/jira-research-story-templates/`
+
+Automates creating the nine standard UX research stories in Jira (CPUX project) for the HCC team. Instead of manually creating each ticket, just tell Cursor to create them and the skill handles the rest.
+
+#### What it does
+
+When you ask Cursor to create research stories, it will:
+
+1. Create all **nine canonical research stories** in the correct order under a parent epic:
+
+   | # | Story | Default Points |
+   |---|-------|----------------|
+   | 1 | Create a research proposal and get approved | 3 |
+   | 2 | Create a research plan | 5 |
+   | 3 | Create research artifacts (prototype, mocks, script, etc.) | 5 |
+   | 4 | Get budget approved | 1 |
+   | 5 | Recruit users | 3 |
+   | 6 | Run research interviews | 5 |
+   | 7 | Analyze data and create summary report | 5 |
+   | 8 | Pay users | 1 |
+   | 9 | Share out research findings with stakeholders | 2 |
+
+2. Automatically set on each story:
+   - **HCC label** and **HCC component**
+   - **Story points** and **Activity Type** per the table above
+   - **Description** with What + Problem Statement sections
+   - **Acceptance Criteria** in the dedicated Jira field (`customfield_10718`)
+   - **Refinement** status
+   - Stories go to the **backlog** by default (no sprint assignment)
+
+#### How to use it
+
+**Standalone** — create research stories under an existing epic:
+> "Create the nine research stories under CPUX-1234"
+
+**Bundled with epic creation** — create a research epic and stories together (uses the [hcc-epic-creator](.cursor/skills/hcc-epic-creator/) skill):
+> "Create a research epic for dashboard usability testing"
+
+The skill detects the word "research" in the epic name and automatically creates all nine child stories after the epic is created.
+
+#### Prerequisites
+
+- **Atlassian MCP** must be connected in Cursor (Settings → Tools & MCP)
+- The MCP connects to `redhat.atlassian.net`, project `CPUX`
+
+### HCC Epic Creator
+
+**Location:** `.cursor/skills/hcc-epic-creator/`
+
+Creates standardized UXD Epic tickets with problem statements, Definition of Done, suggested stories, labels, and components. When the epic summary includes "research," it automatically chains into the research story creator above.
+
+#### How to use it
+
+> "Create a Jira epic for [topic]"
+
+The skill walks through gathering details, writing the problem statement, selecting the appropriate label, and creating the epic with all required fields.
+
+### Archie — UX Research Knowledge Retrieval
+
+**Location:** `.cursor/skills/archie/`
+
+Retrieves data from past UX research reports stored on Google Drive. Ask questions about what the team knows from prior research studies and Archie pulls findings directly from the source artifacts.
+
+#### How to use it
+
+> "What do we know about onboarding friction from our UX research?"
+
+> "Pull findings about enterprise admins from last year's research"
+
+#### Prerequisites
+
+- **Google Workspace MCP** must be configured (see [taylorwilsdon/google_workspace_mcp](https://github.com/taylorwilsdon/google_workspace_mcp))
+- **Dataverse MCP** (optional) for live UXR team roster queries
+
+---
+
+## Adding a skill to your Cursor
+
+If someone shares a skill file with you:
+
+1. Save the `SKILL.md` (and any companion files) into a named folder under `~/.cursor/skills/` for user-level access, or `<project>/.cursor/skills/` for project-level access.
+2. Cursor auto-discovers skills in those directories — no restart needed.
+
+Example:
+```
+~/.cursor/skills/jira-research-story-templates/SKILL.md
+```
+
+---
+
 ## Configurations
+
 * [TypeScript Config](./tsconfig.json)
 * [Webpack Config](./webpack.common.js)
 * [Jest Config](./jest.config.js)
 * [Editor Config](./.editorconfig)
-
-## Raster image support
-
-To use an image asset that's shipped with PatternFly core, you'll prefix the paths with "@assets". `@assets` is an alias for the PatternFly assets directory in node_modules.
-
-For example:
-```js
-import imgSrc from '@assets/images/g_sizing.png';
-<img src={imgSrc} alt="Some image" />
-```
-
-You can use a similar technique to import assets from your local app, just prefix the paths with "@app". `@app` is an alias for the main src/app directory.
-
-```js
-import loader from '@app/assets/images/loader.gif';
-<img src={loader} alt="Content loading" />
-```
-
-## Vector image support
-Inlining SVG in the app's markup is also possible.
-
-```js
-import logo from '@app/assets/images/logo.svg';
-<span dangerouslySetInnerHTML={{__html: logo}} />
-```
-
-You can also use SVG when applying background images with CSS. To do this, your SVG's must live under a `bgimages` directory (this directory name is configurable in [webpack.common.js](./webpack.common.js#L5)). This is necessary because you may need to use SVG's in several other context (inline images, fonts, icons, etc.) and so we need to be able to differentiate between these usages so the appropriate loader is invoked.
-```css
-body {
-  background: url(./assets/bgimages/img_avatar.svg);
-}
-```
-
-## Adding custom CSS
-When importing CSS from a third-party package for the first time, you may encounter the error `Module parse failed: Unexpected token... You may need an appropriate loader to handle this file typ...`. You need to register the path to the stylesheet directory in [stylePaths.js](./stylePaths.js). We specify these explicitly for performance reasons to avoid webpack needing to crawl through the entire node_modules directory when parsing CSS modules.
-
-## Code quality tools
-* For accessibility compliance, we use [react-axe](https://github.com/dequelabs/react-axe)
-* To keep our bundle size in check, we use [webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer)
-* To keep our code formatting in check, we use [prettier](https://github.com/prettier/prettier)
-* To keep our code logic and test coverage in check, we use [jest](https://github.com/facebook/jest)
-* To ensure code styles remain consistent, we use [eslint](https://eslint.org/)
-
-## Multi environment configuration
-This project uses [dotenv-webpack](https://www.npmjs.com/package/dotenv-webpack) for exposing environment variables to your code. Either export them at the system level like `export MY_ENV_VAR=http://dev.myendpoint.com && npm run start:dev` or simply drop a `.env` file in the root that contains your key-value pairs like below:
-
-```sh
-ENV_1=http://1.myendpoint.com
-ENV_2=http://2.myendpoint.com
-```
-
-
-With that in place, you can use the values in your code like `console.log(process.env.ENV_1);`
