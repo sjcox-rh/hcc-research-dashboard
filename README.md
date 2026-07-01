@@ -48,7 +48,7 @@ When you ask Cursor to create research stories, it will:
    | 3 | Create research artifacts (prototype, mocks, script, etc.) | 5 |
    | 4 | Get budget approved | 1 |
    | 5 | Recruit users | 3 |
-   | 6 | Run research interviews | 5 |
+   | 6 | Run research interviews | 2 |
    | 7 | Analyze data and create summary report | 5 |
    | 8 | Pay users | 1 |
    | 9 | Share out research findings with stakeholders | 2 |

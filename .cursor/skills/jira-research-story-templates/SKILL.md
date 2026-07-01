@@ -146,7 +146,7 @@ Keep this **order** as the default backbone; split or merge stories if the teamâ
 | 3 | Create research artifacts (prototype, mocks, script, etc.) | 5 | Make (`10319`) |
 | 4 | Get budget approved | 1 | Enable (`10315`) |
 | 5 | Recruit users | 3 | Enable (`10315`) |
-| 6 | Run research interviews | 5 | Monitor (`10320`) |
+| 6 | Run research interviews | 2 | Monitor (`10320`) |
 | 7 | Analyze data and create summary report | 5 | Make (`10319`) |
 | 8 | Pay users | 1 | Enable (`10315`) |
 | 9 | Share out research findings with stakeholders | 2 | Enable (`10315`) |
@@ -246,10 +246,14 @@ If the recruitment process is rushed or untargeted, we risk interviewing the wro
 
 ### 6. Run research interviews
 
+> **Note:** This story should be **duplicated for each individual user session**. Create one copy of this story per participant so that each session is tracked, recorded, and documented independently.
+
 **Description** (`description` field):
 
 ### What
 Execute the research sessions with the scheduled participants, capturing raw qualitative and quantitative data using the finalized artifacts.
+
+**Note:** This story should be duplicated for each individual user session. Create one copy per participant so that each session is tracked, recorded, and documented independently.
 
 ### Problem Statement
 If interviews are not conducted neutrally or recorded properly, critical user pain points might be missed or misinterpreted, leading to skewed conclusions.
@@ -259,6 +263,7 @@ If interviews are not conducted neutrally or recorded properly, critical user pa
 - [ ] All scheduled interview sessions are completed.
 - [ ] Sessions are recorded (video/audio) with participant consent.
 - [ ] High-level notes/transcripts are captured for each session.
+- [ ] An execution snapshot is created for each user.
 
 ### 7. Analyze data and create summary report
 
